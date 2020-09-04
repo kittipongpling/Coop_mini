@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+<link rel="stylesheet" href="../css/fle_css.css">
+<style>
+table,th,td {
+  border : 1px solid black;
+  border-collapse: collapse;
+}
+th,td {
+  padding: 5px;
+}
+</style>
+<body>
+  
+  <header >
+    <h1><a href="#"><img src="https://pngimg.com/uploads/book/book_PNG51067.png" alt="Logo"/></a></h1>
+    <ul class="custom-navbar js-custom-navbar">
+      <li>
+        <a href="./home.html" class="ripple-wave">หน้าแรก</a>
+      </li>
+      <li>
+        <a href="./about.html" class="ripple-wave">เกี่ยวกับ</a>
+      </li>
+      <li>
+        <a href="./borrow.html" class="ripple-wave">ยืม</a>
+      </li>
+      <li>
+        <a href="./contact.html" class="ripple-wave">ติดต่อ</a>
+      </li>
+    </ul>
+    <button class="menu-icon js-menu-icon">
+      <span class="fa fa-bars"></span>
+    </button>
+  </header>
+  
+<br><br>
+<div align="center">
+  <h1>รายชื่อหนังสือ</h1>
+
+<table id="demo"></table>
+</div>
+<br>
+<script>
+  loadXMLDoc()
+function loadXMLDoc() {
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      myFunction(this);
+    }
+  };
+  xmlhttp.open("GET", "../xml/Data_home.xml", true);
+  xmlhttp.send();
+}
+function myFunction(xml) {
+  var i,j;
+  var xmlDoc = xml.responseXML;
+  var table="<tr><th>ลำดับ</th><th>ชื่อหนังสือ</th><th>ชื่อผู้แต่ง</th><th>ประเทศ</th><th>บริษัท</th><th>ราคา (บาท)</th><th>ปีที่แต่ง</th></tr>";
+  var x = xmlDoc.getElementsByTagName("CD");
+
+  for (i = 0,j=1; i <x.length; i++,j++) { 
+    table += "<tr><td>" + 
+    j +
+    "</td><td>" +
+    x[i].getElementsByTagName("TITLE")[0].childNodes[0].nodeValue +
+    "</td><td>" +
+    x[i].getElementsByTagName("ARTIST_NAMW")[0].childNodes[0].nodeValue +
+    "</td><td>" +
+    x[i].getElementsByTagName("COUNTRY")[0].childNodes[0].nodeValue +
+    "</td><td>" +
+    x[i].getElementsByTagName("COMPANY")[0].childNodes[0].nodeValue +
+    "</td><td>" +
+    x[i].getElementsByTagName("PRICE")[0].childNodes[0].nodeValue +
+    "</td><td>" +
+    x[i].getElementsByTagName("YEAR")[0].childNodes[0].nodeValue +
+    "</td></tr>";
+  }
+  document.getElementById("demo").innerHTML = table;
+}
+</script>
+<script src="../js/nev.js"></script>
+
+</body>
+</html>
